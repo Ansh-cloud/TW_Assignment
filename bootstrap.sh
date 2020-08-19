@@ -1,17 +1,19 @@
 #!/bin/bash
 sudo su
-dnf install httpd php php-mysqlnd php-gd php-xml
+dnf install httpd php php-mysqlnd php-gd php-xml -y
+systemctl start httpd
+systemctl enable httpd
+dnf install wget -y
 cd /home/ec2-user
 wget https://releases.wikimedia.org/mediawiki/1.34/mediawiki-1.34.2.tar.gz
-cd /var/www/html
+sed -i 's#/var/www/html#/var/www#g' /etc/httpd/conf/httpd.conf
+sed -i 's/DirectoryIndex index.html/DirectoryIndex index.html index.html.var index.php/g' /etc/httpd/conf/httpd.conf
+cd /var/www
 tar -zxf /home/ec2-user/mediawiki-1.34.2.tar.gz
 ln -s mediawiki-1.34.2/ mediawiki
 chown -R apache:apache /var/www/mediawiki
-systemctl start httpd
-systemctl enable httpd
-sed -i 's/DirectoryIndex index.html/DirectoryIndex index.html index.html.var index.php/g' /etc/httpd/conf/httpd.conf
 systemctl restart httpd
-dnf install firewalld
+dnf install firewalld -y
 firewall-cmd --permanent --zone=public --add-service=http
 firewall-cmd --permanent --zone=public --add-service=https
 systemctl restart firewalld
