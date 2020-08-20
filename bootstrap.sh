@@ -1,6 +1,8 @@
 #!/bin/bash
 sudo su
 dnf install httpd php php-mysqlnd php-gd php-xml -y
+dnf install php-json -y
+dnf install php-mbstring -y
 systemctl start httpd
 systemctl enable httpd
 dnf install wget -y
@@ -14,6 +16,7 @@ ln -s mediawiki-1.34.2/ mediawiki
 chown -R apache:apache /var/www/mediawiki
 systemctl restart httpd
 dnf install firewalld -y
+system start firewalld
 firewall-cmd --permanent --zone=public --add-service=http
 firewall-cmd --permanent --zone=public --add-service=https
 systemctl restart firewalld
