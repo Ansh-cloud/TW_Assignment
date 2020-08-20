@@ -18,8 +18,8 @@ systemctl restart httpd
 yum install firewalld -y
 systemctl enable firewalld
 systemctl start firewalld
-firewall-cmd --permanent --zone=public --add-service=http
-firewall-cmd --permanent --zone=public --add-service=https
+/usr/bin/firewall-cmd --permanent --zone=public --add-service=http
+/usr/bin/firewall-cmd --permanent --zone=public --add-service=https
 systemctl restart firewalld
 restorecon -FR /var/www/mediawiki-1.34.2/
 restorecon -FR /var/www/mediawiki
