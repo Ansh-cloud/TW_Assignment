@@ -15,11 +15,11 @@ tar -zxf /home/ec2-user/mediawiki-1.34.2.tar.gz
 ln -s mediawiki-1.34.2/ mediawiki
 chown -R apache:apache /var/www/mediawiki
 systemctl restart httpd
-yum install firewalld -y
-systemctl enable firewalld
-systemctl start firewalld
-/usr/bin/firewall-cmd --permanent --zone=public --add-service=http
-/usr/bin/firewall-cmd --permanent --zone=public --add-service=https
-systemctl restart firewalld
+#yum install firewalld -y
+#systemctl enable firewalld
+#systemctl start firewalld
+#/usr/bin/firewall-cmd --permanent --zone=public --add-service=http
+#/usr/bin/firewall-cmd --permanent --zone=public --add-service=https
+#systemctl restart firewalld
 restorecon -FR /var/www/mediawiki-1.34.2/
 restorecon -FR /var/www/mediawiki
